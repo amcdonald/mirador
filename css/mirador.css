@@ -783,6 +783,8 @@ a.mirador-icon-annotationDetail-toggle.hidden {
   left: -25px;
 }
 
+.mirador-icon-load-editor { background-position: -83px -83px}
+
 .mirador-icon-previous { background-position: -80px -40px; }
 .mirador-icon-previous:hover { background-position: -80px -60px; }
 
