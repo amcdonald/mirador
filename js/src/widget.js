@@ -112,6 +112,7 @@
 
     render: function() {
       var className = this.type[0].toUpperCase() + this.type.substring(1, 1000);
+      console.log(className);
 
       this.viewObj = new $[className]({
         // standard initialization, not everything will be populated

@@ -446,6 +446,7 @@
       selectorNext            = '.mirador-icon-next',
       selectorPrevious        = '.mirador-icon-previous',
       selectorAnnotorius      = '.mirador-icon-annotorius',
+      selectorEditor          = '.mirador-icon-load-editor',
       _this = this;
 
       navToolbar.on('click', selectorPrevious, function() {
@@ -458,6 +459,11 @@
 
       navToolbar.on('click', selectorMetadataView, function() {
         $.viewer.loadView("metadataView", _this.manifestId);
+      });
+
+      navToolbar.on('click', selectorEditor, function() {
+        console.log("clicked editor button");
+        $.viewer.loadView("editorView", _this.manifestId);
       });
 
       navToolbar.on('click', selectorScrollView, function() {

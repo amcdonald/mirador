@@ -3410,6 +3410,48 @@ text {
   margin-right: 5px;
 }
 
+/* editor view
+---------------------------------------------------------------------------- */
+
+/*.mirador-viewer .sub-title {
+  border-bottom: 1px dotted #ccc;
+  color: #666;
+  font-weight: bold;
+  margin: 10px 20px 0 20px;
+  padding: 0 5px 5px 0;
+}
+
+.mirador-viewer dl.metadata-listing {
+  margin: 0;
+  padding: 0px 20px 10px 20px;
+}
+
+.mirador-viewer dl.metadata-listing a:hover {
+  border-bottom: 1px dotted #005EBD;
+}
+
+.mirador-viewer .metadata-listing dt {
+  clear: both;
+  color: #555;
+  float: left;
+  line-height: 1.5;
+  padding: 3px 0;
+  text-transform: capitalize;
+  width: 8em;
+}
+
+.mirador-viewer .metadata-listing dd {
+  margin-left: 8em;
+  line-height: 1.5;
+  padding: 3px 0;
+}*/
+
+.mirador-editor-view-nav-toolbar {
+  float: right;
+  margin-right: 5px;
+}
+
+
 
 /* open layers annotorius view
 ---------------------------------------------------------------------------- */

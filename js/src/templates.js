@@ -122,6 +122,7 @@
           '<a href="javascript:;" class="mirador-btn mirador-icon-previous"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-next"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-annotorius"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-load-editor"></a>',
         '</div>'
       ].join('')),
 
@@ -312,6 +313,23 @@
             '<dt>{{label}}:</dt><dd>{{value}}</dd>',
           '{{/each}}',
         '</dl>'
+      ].join(''), { noEscape: true }),
+
+      // template for rendering tool bar with nav links
+      navToolbar: Handlebars.compile([
+        '<div class="{{navToolbarCls}}">',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-scroll-view"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-thumbnails-view"></a>',
+        '</div>'
+      ].join(''))
+    },
+
+    /* Editor view
+    -------------------------------------------------------------------------- */
+    editorView: {
+      // template for rendering basic metadata terms
+      showTextArea: Handlebars.compile([
+        '<div class="sub-title"><textarea id="myEditor">wheeee</textarea></div>'
       ].join(''), { noEscape: true }),
 
       // template for rendering tool bar with nav links

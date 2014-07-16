@@ -49,6 +49,10 @@ window.Mirador = window.Mirador || function(config) {
         'label': 'Metadata View'
       },
 
+      'editorView': {
+        'label': 'Editor'
+      },
+
       'openLayersAnnotoriusView': {
         'label': 'Annotate View'
       }
@@ -120,6 +124,12 @@ window.Mirador = window.Mirador || function(config) {
 
     // metadata view
     'metadataView': {
+      'height': 400,
+      'width': 600
+    },
+
+    // editor view
+    'editorView': {
       'height': 400,
       'width': 600
     },

@@ -61,6 +61,7 @@ module.exports = function(grunt) {
     'js/src/imageView.js',
     'js/src/scrollView.js',
     'js/src/metadataView.js',
+    'js/src/editorView.js',
     'js/src/thumbnailsView.js',
     'js/src/openLayersAnnotoriusView.js',
     'js/src/widgetStatusBar.js',
