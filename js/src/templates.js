@@ -337,6 +337,7 @@
         '<div class="{{navToolbarCls}}">',
           '<a href="javascript:;" class="mirador-btn mirador-icon-scroll-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-thumbnails-view"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-load-editor"></a>',
         '</div>'
       ].join(''))
     },

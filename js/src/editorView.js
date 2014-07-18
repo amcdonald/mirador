@@ -60,6 +60,7 @@
       var navToolbar = this.parent.toolbar.element.find('.' + this.navToolbarCls),
           selectorScrollView     = '.mirador-icon-scroll-view',
           selectorThumbnailsView = '.mirador-icon-thumbnails-view',
+          selectorSave           = '.mirador-icon-load-editor',
           _this = this;
 
       navToolbar.on('click', selectorScrollView, function() {
@@ -68,6 +69,10 @@
 
       navToolbar.on('click', selectorThumbnailsView, function() {
         $.viewer.loadView("thumbnailsView", _this.manifestId);
+      });
+
+      navToolbar.on('click', selectorSave, function(){
+        alert(CKEDITOR.instances.myEditor.getData());
       });
     },
 
