@@ -72,7 +72,7 @@
       });
 
       navToolbar.on('click', selectorSave, function(){
-        alert(CKEDITOR.instances.myEditor.getData());
+        Meteor.call('saveEditorDoc', CKEDITOR.instances.myEditor.getData());
       });
     },
 
