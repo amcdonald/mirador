@@ -7,6 +7,7 @@
       element:              null,
       parent:               null,
       metadata:             null,
+      editorID:             null, 
       //metadataListingCls:   'metadata-listing',
       navToolbarCls:        'mirador-editor-view-nav-toolbar'
     }, options);
@@ -77,7 +78,13 @@
     },
 
     addEditorWindow: function(){
-      this.element.append($.Templates.editorView.showTextArea());
+
+      var editorID;
+      Meteor.call('getNewEditorID', function(error, newEditorID){
+        console.log(newEditorID);
+      });
+
+      this.element.append($.Templates.editorView.showTextArea());      
       this.replaceEditor();
     },
 

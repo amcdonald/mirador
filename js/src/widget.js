@@ -48,7 +48,7 @@
           'collapse': 'ui-icon-minus'
         },
         // limit maximized widget height to not hide main menu and status bar
-        'mainMenuHeight': $.viewer.mainMenu.element.outerHeight(true),
+        'mainMenuHeight': $.viewer.mainMenu.element.outerHeight(true) + 84, //the plus 84 accounts for the scriptorium header
         'statusBarHeight': $.viewer.statusBar.element.outerHeight(true)
       }
 
