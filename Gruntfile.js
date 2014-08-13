@@ -21,8 +21,10 @@ module.exports = function(grunt) {
 
   // libraries/plugins
   vendors = [
-    'js/lib/jquery.min.js',
-    'js/lib/jquery-ui.custom.min.js',
+    //'js/lib/jquery.min.js',
+    'js/lib/jquery-ui-no-slider.custom.js',
+    // 'js/lib/jquery-ui.custom.min.js',
+    //'js/lib/jquery-ui.min.js',
     'js/lib/jquery-ui.touch-punch.min.js',
     'js/lib/jquery-ui.dialogextend.min.js',
     'js/lib/jquery.scrollTo.min.js',

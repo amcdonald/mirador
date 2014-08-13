@@ -80,16 +80,17 @@
     addEditorWindow: function(){
 
       var editorID;
+      var that = this;
       Meteor.call('getNewEditorID', function(error, newEditorID){
         console.log(newEditorID);
-      });
+        that.element.append($.Templates.editorView.showTextArea({editorID: newEditorID}));
+        that.replaceEditor(newEditorID);
+      });        
 
-      this.element.append($.Templates.editorView.showTextArea());      
-      this.replaceEditor();
     },
 
-    replaceEditor: function(){
-      CKEDITOR.replace('myEditor');
+    replaceEditor: function(editorID){
+      CKEDITOR.replace(editorID);
     }
 
 

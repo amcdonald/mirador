@@ -76,6 +76,12 @@
       this.olMap.zoomToMaxExtent();
 
       anno.makeAnnotatable(this.olMap);
+      anno.addHandler('onAnnotationCreated', function(annotation) {
+        var annoObject = annotation;
+        console.log(annoObject.shapes[0].geometry.height);
+        console.log(annoObject.text);
+        console.log(annoObject.src);
+      });
     },
 
 

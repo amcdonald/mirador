@@ -329,7 +329,7 @@
     editorView: {
       // template for rendering basic metadata terms
       showTextArea: Handlebars.compile([
-        '<div class="sub-title"><textarea id="myEditor">wheeee</textarea></div>'
+        '<div class="sub-title"><textarea id="{{editorID}}">wheeee</textarea></div>'
       ].join(''), { noEscape: true }),
 
       // template for rendering tool bar with nav links
