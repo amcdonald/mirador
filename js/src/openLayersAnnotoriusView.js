@@ -78,9 +78,15 @@
       anno.makeAnnotatable(this.olMap);
       anno.addHandler('onAnnotationCreated', function(annotation) {
         var annoObject = annotation;
-        console.log(annoObject.shapes[0].geometry.height);
-        console.log(annoObject.text);
-        console.log(annoObject.src);
+        // console.log("height = " +annoObject.shapes[0].geometry.height);
+        // console.log("width = " +annoObject.shapes[0].geometry.width);
+        // console.log("x = " +annoObject.shapes[0].geometry.x);
+        // console.log("y = " +annoObject.shapes[0].geometry.y);
+        // console.log("text = " + annoObject.text);
+        // console.log("source = " + annoObject.src);
+
+        Meteor.call("saveAnnotoriusAnnos", annotation.src, annotation.x, annotation.y, annotation.width, annotation.height, annotation.text);
+
       });
     },
 
