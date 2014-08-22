@@ -23,6 +23,7 @@
           selectorScrollView      = selectorListing + ' a.mirador-icon-scroll-view',
           selectorMetadataView    = selectorListing + ' a.mirador-icon-metadata-view',
           selectorThumbnailsView  = selectorListing + ' a.mirador-icon-thumbnails-view',
+          selectorAddMani         = selectorListing + ' a.mirador-icon-add-mani',
           _this                   = this;
 
       // attach onChange event handler for collections select list
@@ -53,6 +54,10 @@
 
         $.viewer.loadView("thumbnailsView", manifestId);
       });
+
+      jQuery(document).on('click', selectorAddMani, function() {
+        Meteor.miradorFunctions.addMani();
+      });      
 
       // attach click event for scroll view icon
       jQuery(document).on('click', selectorScrollView, function() {

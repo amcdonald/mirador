@@ -447,6 +447,7 @@
       selectorPrevious        = '.mirador-icon-previous',
       selectorAnnotorius      = '.mirador-icon-annotorius',
       selectorEditor          = '.mirador-icon-load-editor',
+      selectorAddFolio        = '.mirador-icon-send-folio',
       _this = this;
 
       navToolbar.on('click', selectorPrevious, function() {
@@ -464,6 +465,10 @@
       navToolbar.on('click', selectorEditor, function() {
         console.log("clicked editor button");
         $.viewer.loadView("editorView", _this.manifestId);
+      });
+
+      navToolbar.on('click', selectorAddFolio, function() {
+        console.log(_this.manifestId + " " + _this.currentImg.id);
       });
 
       navToolbar.on('click', selectorScrollView, function() {

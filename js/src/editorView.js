@@ -78,8 +78,6 @@
     },
 
     addEditorWindow: function(){
-
-      var editorID;
       var that = this;
       Meteor.call('getNewEditorID', function(error, newEditorID){
         console.log(newEditorID);

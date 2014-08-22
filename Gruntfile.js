@@ -108,7 +108,7 @@ module.exports = function(grunt) {
       },
       css: {
         src: [
-        'css/font-awesome.css',
+        // 'css/font-awesome.css',
         'css/normalize.css',
         'css/jquery-ui.custom.css',
         'css/mirador.css',

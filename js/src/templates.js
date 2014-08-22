@@ -61,6 +61,7 @@
           '<a href="javascript:;" class="mirador-btn mirador-icon-thumbnails-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-scroll-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-metadata-view"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-add-mani"><i class="fa fa-plus" data-toggle="modal" data-target="#addManifestModal"></i></a>',
           '{{#collections}}',
             '{{#list}}',
               '<ul class="ul-{{manifestId}}">',
@@ -114,7 +115,7 @@
       // template for rendering tool bar with nav links
       navToolbar: Handlebars.compile([
         '<div class="{{navToolbarCls}}">',
-          '<a href="javascript:;" class="mirador-btn mirador-icon-annotations"><i class="icon-comments"></i></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-annotations"><i class="fa fa-comments"></i></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-choices"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-metadata-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-scroll-view"></a>',
@@ -123,6 +124,7 @@
           '<a href="javascript:;" class="mirador-btn mirador-icon-next"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-annotorius"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-load-editor"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-send-folio"><i class="fa fa-paper-plane"></i></a>',
         '</div>'
       ].join('')),
 

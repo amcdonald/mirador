@@ -1,5 +1,5 @@
 //! Mirador 0.9.0
-//! Built on 2014-08-14
+//! Built on 2014-08-19
 /*! jQuery UI - v1.10.3 - 2013-06-06
  * http://jqueryui.com
  * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.position.js, jquery.ui.draggable.js, jquery.ui.resizable.js, jquery.ui.button.js, jquery.ui.dialog.js, jquery.ui.menu.js, jquery.ui.slider.js
@@ -7961,6 +7961,7 @@ jQuery.fn.scrollStop = function(callback) {
           '<a href="javascript:;" class="mirador-btn mirador-icon-thumbnails-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-scroll-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-metadata-view"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-add-mani"><i class="fa fa-plus" data-toggle="modal" data-target="#addManifestModal"></i></a>',
           '{{#collections}}',
             '{{#list}}',
               '<ul class="ul-{{manifestId}}">',
@@ -8014,7 +8015,7 @@ jQuery.fn.scrollStop = function(callback) {
       // template for rendering tool bar with nav links
       navToolbar: Handlebars.compile([
         '<div class="{{navToolbarCls}}">',
-          '<a href="javascript:;" class="mirador-btn mirador-icon-annotations"><i class="icon-comments"></i></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-annotations"><i class="fa fa-comments"></i></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-choices"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-metadata-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-scroll-view"></a>',
@@ -8023,6 +8024,7 @@ jQuery.fn.scrollStop = function(callback) {
           '<a href="javascript:;" class="mirador-btn mirador-icon-next"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-annotorius"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-load-editor"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-send-folio"><i class="fa fa-paper-plane"></i></a>',
         '</div>'
       ].join('')),
 
@@ -8364,6 +8366,7 @@ jQuery.fn.scrollStop = function(callback) {
           selectorScrollView      = selectorListing + ' a.mirador-icon-scroll-view',
           selectorMetadataView    = selectorListing + ' a.mirador-icon-metadata-view',
           selectorThumbnailsView  = selectorListing + ' a.mirador-icon-thumbnails-view',
+          selectorAddMani         = selectorListing + ' a.mirador-icon-add-mani',
           _this                   = this;
 
       // attach onChange event handler for collections select list
@@ -8394,6 +8397,10 @@ jQuery.fn.scrollStop = function(callback) {
 
         $.viewer.loadView("thumbnailsView", manifestId);
       });
+
+      jQuery(document).on('click', selectorAddMani, function() {
+        Meteor.miradorFunctions.addMani();
+      });      
 
       // attach click event for scroll view icon
       jQuery(document).on('click', selectorScrollView, function() {
@@ -10278,6 +10285,7 @@ jQuery.fn.scrollStop = function(callback) {
       selectorPrevious        = '.mirador-icon-previous',
       selectorAnnotorius      = '.mirador-icon-annotorius',
       selectorEditor          = '.mirador-icon-load-editor',
+      selectorAddFolio        = '.mirador-icon-send-folio',
       _this = this;
 
       navToolbar.on('click', selectorPrevious, function() {
@@ -10295,6 +10303,10 @@ jQuery.fn.scrollStop = function(callback) {
       navToolbar.on('click', selectorEditor, function() {
         console.log("clicked editor button");
         $.viewer.loadView("editorView", _this.manifestId);
+      });
+
+      navToolbar.on('click', selectorAddFolio, function() {
+        console.log(_this.manifestId + " " + _this.currentImg.id);
       });
 
       navToolbar.on('click', selectorScrollView, function() {
@@ -10888,8 +10900,6 @@ jQuery.fn.scrollStop = function(callback) {
     },
 
     addEditorWindow: function(){
-
-      var editorID;
       var that = this;
       Meteor.call('getNewEditorID', function(error, newEditorID){
         console.log(newEditorID);
