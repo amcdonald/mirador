@@ -468,7 +468,8 @@
       });
 
       navToolbar.on('click', selectorAddFolio, function() {
-        console.log(_this.manifestId + " " + _this.currentImg.id);
+
+        Meteor.miradorFunctions.createFolioEntry(_this.currentImg.imageUrl, _this.currentImg.height, _this.currentImg.width, _this.currentImg.title);
       });
 
       navToolbar.on('click', selectorScrollView, function() {
