@@ -90,12 +90,12 @@
           _this.addWidget(config);
         }
       });
-
+      //This is where the layout issues are!
       if (typeof this.initialLayout !== 'undefined') {
         console.log("layout not undefined");
         console.log(this.initialLayout);
-        // $.viewer.layout.applyLayout(this.initialLayout);
-        // this.currentLayout = this.initialLayout;
+        $.viewer.layout.applyLayout(this.initialLayout);
+        this.currentLayout = this.initialLayout;
       }
     },
 
