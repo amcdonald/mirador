@@ -18,7 +18,7 @@
 
     cascadeAll: function() {
       var _this = this,
-          offset = 0,
+          offset = 100,
           x, y,
           canvas = {};
 
@@ -56,7 +56,7 @@
           columnIndex,
           rowIndex = 0;
 
-      canvas.top    = $.viewer.mainMenu.element.outerHeight(true) + this.rowPadding;
+      canvas.top    = $.viewer.mainMenu.element.outerHeight(true) + this.rowPadding + 75; //change made to suit scriptorium window
       canvas.width  = $.viewer.canvas.width() - this.columnPadding;
       canvas.height = $.viewer.canvas.height() - this.rowPadding;
 

@@ -26,7 +26,7 @@ window.Mirador = window.Mirador || function(config) {
    */
   $.DEFAULT_SETTINGS = {
 
-    'workspaceAutoSave': true,
+    'workspaceAutoSave': false,
 
     'showNoImageChoiceOption': true,
 

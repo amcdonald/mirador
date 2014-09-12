@@ -101,6 +101,7 @@
       });
 
       if (typeof this.initialLayout !== 'undefined') {
+        console.log("undefined" + " " + this.initialLayout);
         $.viewer.layout.applyLayout(this.initialLayout);
         this.currentLayout = this.initialLayout;
       }
