@@ -92,8 +92,10 @@
       });
 
       if (typeof this.initialLayout !== 'undefined') {
-        $.viewer.layout.applyLayout(this.initialLayout);
-        this.currentLayout = this.initialLayout;
+        console.log("layout not undefined");
+        console.log(this.initialLayout);
+        // $.viewer.layout.applyLayout(this.initialLayout);
+        // this.currentLayout = this.initialLayout;
       }
     },
 

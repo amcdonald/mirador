@@ -19,7 +19,8 @@
         return false;
       }
       console.log('session restored');
-      return JSON.parse(localStorage.getItem('Mirador_data'));
+      //return JSON.parse(localStorage.getItem('Mirador_data'));
+      return false;
     }
   };
 

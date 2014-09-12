@@ -27,8 +27,8 @@
       width:                $.DEFAULT_SETTINGS.widget.width,
 
       position: {
-        'my': 'left top',
-        'at': 'left+50 top+50',
+        'my': 'top left',
+        'at': 'top left',
         'of': '.mirador-viewer',
         'collision' : 'fit',
         'within' : '.mirador-viewer'
@@ -41,15 +41,16 @@
       },
 
       dialogExtendOptions: {
-        'maximizable': true,
-        'collapsable': true,
+        'maximizable': false,
+        'collapsable': false,
         'icons': {
           'maximize': 'ui-icon-arrow-4-diag',
           'collapse': 'ui-icon-minus'
         },
         // limit maximized widget height to not hide main menu and status bar
-        'mainMenuHeight': $.viewer.mainMenu.element.outerHeight(true),
-        'statusBarHeight': $.viewer.statusBar.element.outerHeight(true)
+        'mainMenuHeight': $.viewer.mainMenu.element.outerHeight(true) + 84, //account for vhmml menu
+        'statusBarHeight': $.viewer.statusBar.element.outerHeight(true),
+        'sidePanelWidth': 500
       }
 
     }, options);

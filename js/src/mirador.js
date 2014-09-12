@@ -26,15 +26,18 @@ window.Mirador = window.Mirador || function(config) {
    */
   $.DEFAULT_SETTINGS = {
 
-    'workspaceAutoSave': true,
+    'workspaceAutoSave': false,
 
     'showNoImageChoiceOption': true,
 
-    'initialLayout': 'stackAll3Columns',
+    'initialLayout': 'undefined',
 
     'availableViews': {
       'imageView': {
         'label': 'Image View'
+      },
+      'folioView': {
+        'label': 'Folio View'
       },
       'scrollView': {
         'label': 'Scroll View'
@@ -89,9 +92,19 @@ window.Mirador = window.Mirador || function(config) {
       'height': 400,
       'width': 350,
       'annotationsList': {
-        'display':true,
+        'display': true,
         'width': 200
 
+      }
+    },
+
+    //folioView
+    'folioView': {
+      'height': 600,
+      'width': 600,
+      'annotationsList': {
+        'display': true,
+        'width': 200
       }
     },
 

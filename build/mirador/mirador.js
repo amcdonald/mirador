@@ -1,5 +1,5 @@
 //! Mirador 0.9.0
-//! Built on 2014-09-11
+//! Built on 2014-09-12
 /*! jQuery UI - v1.10.3 - 2013-06-06
  * http://jqueryui.com
  * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.position.js, jquery.ui.draggable.js, jquery.ui.resizable.js, jquery.ui.button.js, jquery.ui.dialog.js, jquery.ui.menu.js, jquery.ui.slider.js
@@ -5105,15 +5105,18 @@ window.Mirador = window.Mirador || function(config) {
    */
   $.DEFAULT_SETTINGS = {
 
-    'workspaceAutoSave': true,
+    'workspaceAutoSave': false,
 
     'showNoImageChoiceOption': true,
 
-    'initialLayout': 'stackAll3Columns',
+    'initialLayout': 'undefined',
 
     'availableViews': {
       'imageView': {
         'label': 'Image View'
+      },
+      'folioView': {
+        'label': 'Folio View'
       },
       'scrollView': {
         'label': 'Scroll View'
@@ -5168,9 +5171,19 @@ window.Mirador = window.Mirador || function(config) {
       'height': 400,
       'width': 350,
       'annotationsList': {
-        'display':true,
+        'display': true,
         'width': 200
 
+      }
+    },
+
+    //folioView
+    'folioView': {
+      'height': 600,
+      'width': 600,
+      'annotationsList': {
+        'display': true,
+        'width': 200
       }
     },
 
@@ -5759,8 +5772,10 @@ jQuery.fn.scrollStop = function(callback) {
       });
 
       if (typeof this.initialLayout !== 'undefined') {
-        $.viewer.layout.applyLayout(this.initialLayout);
-        this.currentLayout = this.initialLayout;
+        console.log("layout not undefined");
+        console.log(this.initialLayout);
+        // $.viewer.layout.applyLayout(this.initialLayout);
+        // this.currentLayout = this.initialLayout;
       }
     },
 
@@ -6098,6 +6113,117 @@ jQuery.fn.scrollStop = function(callback) {
           '<a href="javascript:;" class="mirador-btn mirador-icon-thumbnails-view"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-previous"></a>',
           '<a href="javascript:;" class="mirador-btn mirador-icon-next"></a>',
+        '</div>'
+      ].join('')),
+
+      statusbar: Handlebars.compile([
+        '<div class="{{statusbarCls}}">',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-lock"></a>',
+          '<div class="mirador-image-dimensions">',
+          '<span class="noDimensionsWarning">No Dimensions Given</span>',
+            '<textarea rows="1" class="mirador-image-view-physical-dimensions x">{{width}}</textarea>',
+            '<span>✕</span>',
+            '<textarea rows="1" class="mirador-image-view-physical-dimensions y">{{height}}</textarea>',
+            '<span class="units">mm',
+              '<select class="unit-selector">',
+                '<option value="mm">millimeters</option>',
+                '<option value="cm">centimeters</option>',
+                '<option value="m">meters</option>',
+              '</select>',
+            '</span>',
+          '</div>',
+        '</div>'
+      ].join('')),
+
+      annotationPanel: Handlebars.compile([
+        '<div class="annotationListPanel">',
+        '<div class="resizeGrip"></div>',
+        '{{> annotationStats}}',
+          '<ul class="annotationList">',
+          '{{#each annotations}}',
+            '{{> annotationListing}}',
+          '{{/each}}',
+          '</ul>',
+        '</div>'
+      ].join('')),
+
+      annotationStats: (function() {
+        var templateString =
+        ['<div class="annotationPanelHeader">',
+          '<h4>Annotation List (<span class="annotationsTotal">{{annotationCount}}</span>)</h4>',
+          '<div class="annoSearch">',
+          '<select id="annotationTypeSelector" name="annotationTypes">',
+            '<option value="">All (<span class="annotationCount">{{annotationCount}}</span>)</option>',
+            '<option value="commenting">Commentary (<span class="imageAnnotationCount">{{imageAnnotationCount}}</span>)</option>',
+            '<option value="painting">Transcription (<span class="textAnnotationCount">{{textAnnotationCount}}</span>)</option>',
+          '</select>',
+          '</div>',
+        '</div>'
+        ].join('');
+        Handlebars.registerPartial('annotationStats', templateString);
+        return Handlebars.compile(templateString);
+      })(),
+
+      noAnnotationMessage: (function() {
+        var templateString =
+        ['<div class="annotationPanelHeader">',
+            '<h4>No Annotations Provided</h4>',
+         '</div>'
+        ].join('');
+        Handlebars.registerPartial('annotationStats', templateString);
+        return Handlebars.compile(templateString);
+      })(),
+
+      annotationListing: (function() {
+        var templateString =
+          ['<li id="listing_{{id}}" class="annotationListing">',
+              '{{#if title}}',
+              '<h3>{{{title}}}</h3>',
+              '{{/if}}',
+              '<p>{{{content}}}</p>',
+          '</li>'
+        ].join('');
+        Handlebars.registerPartial('annotationListing', templateString);
+        return Handlebars.compile(templateString);
+      })(),
+
+      annotationDetail: Handlebars.compile([
+        '<div class="annotationDetails">',
+          '<div class="annotationNumber">{{annotationNumber}}</div>',
+          '<a class="annotationDetailToggle mirador-icon-annotationDetail-toggle" title="Hide this detail panel."><i class="icon-eye-close"></i></a>',
+          '<p>{{{body}}}</p>',
+        '</div>'
+      ].join('')),
+
+      annotationDetailToggle: Handlebars.compile([
+        '<div class="displayBottomPanelButton">',
+          '<a class="annotationDetailToggle mirador-icon-annotationDetail-toggle" title="Display annotation details in bottom panel."><i class="icon-eye-open"></i></a>',
+        '</div>'
+      ].join('')),
+
+      imageChoices: Handlebars.compile([
+        '<ul class="mirador-image-view-choices">',
+          '{{#choicesInfo}}',
+            '<li><a href="javascript:;" class="mirador-image-view-choice" data-choice="{{label}}" data-image-url="{{imageUrl}}">{{label}}</a></li>',
+          '{{/choicesInfo}}',
+        '</ul>'
+      ].join(''))
+
+    },
+
+    /* Folio view
+    ---------------------------------------------------------------------------- */
+    folioView: {
+      // template for rendering tool bar with nav links
+      navToolbar: Handlebars.compile([
+        '<div class="{{navToolbarCls}}">',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-annotations"><i class="icon-comments"></i></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-choices"></a>',
+          '<a href="javascript:;" class="mirador-btn mirador-icon-metadata-view"></a>',
+          // '<a href="javascript:;" class="mirador-btn mirador-icon-scroll-view"></a>',
+          // '<a href="javascript:;" class="mirador-btn mirador-icon-thumbnails-view"></a>',
+          // '<a href="javascript:;" class="mirador-btn mirador-icon-previous"></a>',
+          // '<a href="javascript:;" class="mirador-btn mirador-icon-next"></a>',
         '</div>'
       ].join('')),
 
@@ -7291,8 +7417,8 @@ jQuery.fn.scrollStop = function(callback) {
       width:                $.DEFAULT_SETTINGS.widget.width,
 
       position: {
-        'my': 'left top',
-        'at': 'left+50 top+50',
+        'my': 'top left',
+        'at': 'top left',
         'of': '.mirador-viewer',
         'collision' : 'fit',
         'within' : '.mirador-viewer'
@@ -7305,15 +7431,16 @@ jQuery.fn.scrollStop = function(callback) {
       },
 
       dialogExtendOptions: {
-        'maximizable': true,
-        'collapsable': true,
+        'maximizable': false,
+        'collapsable': false,
         'icons': {
           'maximize': 'ui-icon-arrow-4-diag',
           'collapse': 'ui-icon-minus'
         },
         // limit maximized widget height to not hide main menu and status bar
-        'mainMenuHeight': $.viewer.mainMenu.element.outerHeight(true),
-        'statusBarHeight': $.viewer.statusBar.element.outerHeight(true)
+        'mainMenuHeight': $.viewer.mainMenu.element.outerHeight(true) + 84, //account for vhmml menu
+        'statusBarHeight': $.viewer.statusBar.element.outerHeight(true),
+        'sidePanelWidth': 500
       }
 
     }, options);
@@ -8076,6 +8203,551 @@ jQuery.fn.scrollStop = function(callback) {
 
     addStatusbarNav: function() {
       this.parent.statusbar.append($.Templates.imageView.statusbar({
+        statusbarCls: this.statusbarCls,
+        width: this.width,
+        height: this.height
+      }));
+
+      this.attachStatusbarEvents();
+    },
+
+
+    addScale: function() {
+      if (!this.scale) {
+        this.scale = new $.WidgetScale({
+          parent: this,
+          showScale: true
+        });
+      }
+    },
+
+
+    addAnnotationsLayer: function() {
+      this.annotationsLayer = new $.AnnotationsLayer({
+        parent: this,
+        annotationUrls: this.currentImg.annotations
+      });
+    },
+
+
+    getImageIndexByTitle: function(title) {
+      var _this = this,
+      imgIndex = 0;
+
+      jQuery.each(this.imagesList, function(index, img) {
+        if ($.trimString(img.title) === $.trimString(title)) {
+          imgIndex = index;
+        }
+      });
+
+      return imgIndex;
+    },
+
+
+    getImageIndexById: function(id) {
+      var _this = this,
+          imgIndex = 0;
+
+      jQuery.each(this.imagesList, function(index, img) {
+        if ($.trimString(img.id) === $.trimString(id)) {
+          imgIndex = index;
+        }
+      });
+
+      return imgIndex;
+    },
+
+
+    getTitle: function() {
+      var titles = [];
+
+      titles.push(
+        $.getViewLabel(this.parent.type) + ' : ' +
+        $.getTitlePrefix(this.parent.metadataDetails)
+      );
+
+      if (this.currentImg.title) {
+        titles.push(this.currentImg.title);
+      }
+
+      return titles.join(" / ");
+    },
+
+
+    setHeight: function(h) {
+      this.height = h;
+    },
+
+
+    setWidth: function(w) {
+      this.width = w;
+    },
+
+
+    next: function() {
+      var next = this.currentImgIndex + 1,
+      infoJsonUrl;
+
+      if (this.locked) {
+        return;
+      }
+
+
+      if (next < this.imagesList.length) {
+        this.currentImgIndex = next;
+        this.currentImg = this.imagesList[next];
+
+        infoJsonUrl = this.currentImg.imageUrl;
+
+        this.createOpenSeadragonInstance(infoJsonUrl);
+        this.annotationsLayer.set('annotationUrls', this.currentImg.annotations);
+      }
+    },
+
+
+    prev: function() {
+      var prev = this.currentImgIndex - 1,
+      infoJsonUrl;
+
+      if (this.locked) {
+        return;
+      }
+
+
+      if (prev >= 0) {
+        this.currentImgIndex = prev;
+        this.currentImg = this.imagesList[prev];
+
+        this.createOpenSeadragonInstance(this.currentImg.imageUrl);
+        this.annotationsLayer.set('annotationUrls', this.currentImg.annotations);
+      }
+    },
+
+
+    attachWindowEvents: function() {
+      var _this = this;
+
+      this.parent.element.on({
+        // It is necessary to know which view to use as
+        // the "leader" for event broadcasting in order to
+        // prevent an infinite loop. This is accomplished by
+        // tracking mouse position for now until OSD integrates
+        // events that don't broadcast events.
+        mouseenter: function() {
+          _this.leading = true;
+        },
+        mouseleave: function(){
+          _this.leading = false;
+        }
+      });
+
+      this.parent.element.dialog({
+        resize: function(event, ui) {
+          _this.osd.viewport.ensureVisible();
+        }
+      });
+
+      this.parent.element.bind('dialogextendmaximize dialogextendrestore', function(event, ui) {
+        _this.osd.viewport.ensureVisible();
+      });
+    },
+
+
+    attachOsdEvents: function() {
+      var _this = this,
+      newWidth = null;
+
+      this.osd.addHandler('zoom', function() { _this.broadcast(); });
+      this.osd.addHandler('pan', function() { _this.broadcast(); });
+    },
+
+
+    attachNavEvents: function() {
+      var navToolbar = this.parent.toolbar.element.find('.' + this.navToolbarCls),
+      selectorAnnotationsView = '.mirador-icon-annotations',
+      selectorMetadataView    = '.mirador-icon-metadata-view',
+      selectorScrollView      = '.mirador-icon-scroll-view',
+      selectorThumbnailsView  = '.mirador-icon-thumbnails-view',
+      selectorNext            = '.mirador-icon-next',
+      selectorPrevious        = '.mirador-icon-previous',
+      _this = this;
+
+      navToolbar.on('click', selectorPrevious, function() {
+        _this.prev();
+      });
+
+      navToolbar.on('click', selectorNext, function() {
+        _this.next();
+      });
+
+      navToolbar.on('click', selectorMetadataView, function() {
+        $.viewer.loadView("metadataView", _this.manifestId);
+      });
+
+      navToolbar.on('click', selectorScrollView, function() {
+        $.viewer.loadView("scrollView", _this.manifestId);
+      });
+
+      navToolbar.on('click', selectorThumbnailsView, function() {
+        $.viewer.loadView("thumbnailsView", _this.manifestId);
+      });
+
+      navToolbar.on('click', selectorAnnotationsView, function() {
+        _this.annotationsLayer.setVisible();
+      });
+
+    },
+
+
+    attachStatusbarEvents: function() {
+      var statusbar = this.parent.statusbar.element.find('.' + this.statusbarCls),
+      lockCls = '.mirador-icon-lock',
+      dimensionCls = '.mirador-image-view-physical-dimensions',
+      unitCls = '.units',
+      _this = this;
+
+      statusbar.on('click', lockCls, function() {
+        if (_this.locked) {
+          _this.unlock();
+        } else {
+          _this.lock();
+        }
+      });
+
+      statusbar.on('keypress paste keyup', dimensionCls, function(e) { _this.dimensionChange(e); });
+
+      statusbar.on('input', unitCls, function() { _this.unitChange(); });
+
+    },
+
+    // Event Handlers
+    broadcast: function() {
+      this.scale.render();
+
+      if (this.osd !== null && this.osd.viewport !== null) {
+        this.zoomLevel = this.osd.viewport.getZoom();
+      }
+
+      // This if statement detects if the view is both locked and
+      // is a "leader" (the mouse is currently hovered over it
+      // or it has focus). See lines ~185, attachWindowEvents()
+      // for this logic.
+
+      if (this.locked === true && this.leading === true) {
+        $.viewer.lockController.broadcast(this.parent.id);
+      }
+    },
+
+    reachedExtent : function (minmax) {
+      // console.log('reached: '+minmax);
+    },
+
+    lock: function() {
+      this.locked = true;
+      this.parent.element.parent().addClass('locked');
+      $.viewer.lockController.addLockedView(this.parent.viewObj);
+    },
+
+    unlock: function() {
+      this.locked = false;
+      this.parent.element.parent().removeClass('locked');
+      $.viewer.lockController.removeLockedView(this.parent.id);
+    },
+
+    dimensionChange: function(e) {
+      var valid = (/[0-9]|\./.test(String.fromCharCode(e.keyCode)) && !e.shiftKey),
+      textAreaClass = e.currentTarget.className,
+      dimension = textAreaClass.charAt(textAreaClass.length-1),
+      aspectRatio = this.parent.viewObj.currentImg.aspectRatio,
+      width,
+      height;
+      // check if the value of the number is an integer 0-9
+      // if not, declare invalid
+      if (!valid) {
+        e.preventDefault();
+      }
+      // console.log(e.type+ " : " + e.key);
+
+      // check if keystroke is "enter"
+      // if so, exit or deselect the box
+      if ((e.keyCode || e.which) === 13) {
+        e.target.blur();
+      }
+
+      if (dimension === 'x') {
+        width = this.parent.statusbar.element.find('.x').val();
+        height = Math.floor(aspectRatio * width);
+        if (!width) {
+          // console.log('empty');
+          this.parent.statusbar.element.find('.y').val('');
+        } else {
+          this.parent.statusbar.element.find('.y').val(height);
+        }
+      } else {
+        height = this.parent.statusbar.element.find('.y').val();
+        width = Math.floor(height/aspectRatio);
+        if (!height) {
+          // console.log('empty');
+          this.parent.statusbar.element.find('.x').val('');
+        } else {
+          this.parent.statusbar.element.find('.x').val(width);
+        }
+        this.height = height;
+        this.width = width;
+
+      }
+      // console.log("dimension: " + dimension);
+      // console.log("width: " + width);
+      // console.log("height: " + height);
+
+      unitCls = '.units';
+
+      this.setWidth(width);
+      this.setHeight(height);
+
+      if (width) {
+        this.scale.dimensionsProvided = true;
+      } else {
+        this.scale.dimensionsProvided = false;
+      }
+      this.scale.render();
+    },
+
+    unitChange: function() {
+      // console.log('units updated');
+    }
+
+  };
+
+}(Mirador));
+
+(function($) {
+
+  $.FolioView = function(options) {
+
+    jQuery.extend(this, {
+      currentImg:       null,
+      currentImgIndex:  0,
+      element:          null,
+      elemChoice:       null,
+      height:           null,
+      width:            null,
+      units:            "mm",
+      unitsLong:        "Millimetres",
+      imageId:          null,
+      imagesList:       [],
+      leading:          false,
+      locked:           false,
+      navToolbarCls:    'mirador-image-view-nav-toolbar',
+      annotationsLayer:  null,
+      openAt:           null,
+      zoomLevel:        null,
+      osd:              null,
+      osdBounds:        null,
+      osdCls:           'mirador-osd',
+      osdToolbarCls:    'mirador-osd-toolbar',
+      parent:           null,
+      scale:            null,
+      scaleCls:         'mirador-image-scale',
+      selectedChoice:   '',
+      statusbarCls:     'mirador-image-view-statusbar',
+      folioViewBgCls:   'mirador-image-view-bg'
+    }, options);
+
+
+    if (this.imageId !== null) {
+      this.currentImgIndex = this.getImageIndexById(this.imageId);
+    }
+
+    if (this.openAt !== null) {
+      this.currentImgIndex = this.getImageIndexByTitle(this.openAt);
+    }
+
+    this.parent.element.find('.mirador-widget-content').addClass(this.folioViewBgCls);
+
+    this.currentImg = this.imagesList[this.currentImgIndex];
+  };
+
+
+  $.FolioView.prototype = {
+
+    render: function() {
+      this.addToolbarNav();
+      this.createOpenSeadragonInstance(this.currentImg.imageUrl);
+      this.addStatusbarNav();
+      this.attachWindowEvents();
+      this.addAnnotationsLayer();
+    },
+
+    createOpenSeadragonInstance: function(imageUrl, osdBounds) {
+      var infoJsonUrl = $.Iiif.getUri(imageUrl) + '/info.json',
+      osdId = 'mirador-osd-' + $.genUUID(),
+      osdToolBarId = osdId + '-toolbar',
+      infoJson,
+      elemOsd,
+      _this = this;
+
+      this.element.find('.' + this.osdCls).remove();
+
+      this.addOpenSeadragonToolBar(osdToolBarId);
+
+      infoJson = $.getJsonFromUrl(infoJsonUrl, false);
+
+      elemOsd =
+        jQuery('<div/>')
+      .addClass(this.osdCls)
+      .attr('id', osdId)
+      .appendTo(this.element);
+
+      this.osd = $.OpenSeadragon({
+        'id':           elemOsd.attr('id'),
+        'toolbar':      osdToolBarId,
+        'tileSources':  $.Iiif.prepJsonForOsd(infoJson)
+      });
+
+      this.osd.addHandler('open', function(){
+        _this.addScale();
+        _this.attachOsdEvents();
+        _this.zoomLevel = _this.osd.viewport.getZoom();
+
+        if (typeof osdBounds != 'undefined') {
+          _this.osd.viewport.fitBounds(osdBounds, true);
+        }
+      });
+
+      this.parent.element.dialog('option', 'title', this.getTitle());
+
+      // hide browser based full-screen icon
+      this.parent.toolbar.element.find('.' + this.osdToolbarCls + ' button:last-child').hide();
+
+      this.renderChoices();
+    },
+
+
+    clearOpenSeadragonInstance: function() {
+      this.element.find('.' + this.osdCls).remove();
+      // this.element.find('.' + this.scaleCls).remove();
+      this.osd = null;
+
+      this.renderChoices();
+    },
+
+
+    addOpenSeadragonToolBar: function(id) {
+      var osdToolbar =
+        jQuery('<div/>')
+      .addClass(this.osdToolbarCls)
+      .attr('id', id);
+
+      this.parent.toolbar.element.find('.' + this.osdToolbarCls).remove();
+      this.parent.toolbar.append(osdToolbar);
+    },
+
+
+    renderChoices: function() {
+      var _this = this,
+      choicesInfo = [];
+
+      this.clearChoices();
+
+      if (this.currentImg.choices.length > 0) {
+        choicesInfo.push({
+          label: this.currentImg.choiceLabel,
+          imageUrl: this.currentImg.imageUrl
+        });
+
+        jQuery.each(this.currentImg.choices, function(index, choice) {
+          choicesInfo.push({
+            label: choice.choiceLabel,
+            imageUrl: choice.imageUrl
+          });
+        });
+
+        this.elemChoice.show();
+        this.selectedChoice = this.currentImg.choiceLabel;
+
+        this.elemChoice.tooltipster({
+          arrow: true,
+          content: $.Templates.folioView.imageChoices({ choicesInfo: choicesInfo }),
+          functionReady: function() { _this.addImageChoiceEvents(); },
+          interactive: true,
+          position: 'bottom',
+          theme: '.tooltipster-mirador'
+        });
+
+        this.addImageChoiceEvents();
+      }
+    },
+
+
+    addImageChoiceEvents: function() {
+      var _this = this,
+      elemOptionChoices = jQuery(document).find('.mirador-image-view-choices');
+
+      elemOptionChoices.find('li a').each(function(index) {
+        jQuery(this).removeClass('mirador-image-view-choice-selected');
+
+        if (jQuery(this).data('choice') === _this.selectedChoice) {
+          jQuery(this).addClass('mirador-image-view-choice-selected');
+        }
+      });
+
+
+      elemOptionChoices.on('click', 'li a', function(event) {
+        var selectedChoice = jQuery(event.target),
+        dfd = jQuery.Deferred();
+
+        _this.storeCurrentOsdBounds(dfd);
+
+        dfd.done(function() {
+          if (selectedChoice.data('choice') !== 'No Image') {
+            _this.createOpenSeadragonInstance(selectedChoice.data('image-url'), _this.osdBounds);
+          } else {
+            _this.clearOpenSeadragonInstance();
+          }
+        });
+
+        _this.selectedChoice = selectedChoice.data('choice');
+
+        elemOptionChoices.find('li a').removeClass('mirador-image-view-choice-selected');
+        selectedChoice.addClass('mirador-image-view-choice-selected');
+      });
+
+    },
+
+
+    clearChoices: function() {
+      if (this.elemChoice.data('plugin_tooltipster') !== '') {
+        this.elemChoice.tooltipster('destroy');
+      }
+
+      this.elemChoice.hide();
+    },
+
+
+    storeCurrentOsdBounds: function(dfd) {
+      if (this.parent.viewObj.osd !== null) {
+        this.osdBounds = this.parent.viewObj.osd.viewport.getBounds();
+      }
+      dfd.resolve();
+    },
+
+
+    addToolbarNav: function() {
+      this.parent.toolbar.append($.Templates.folioView.navToolbar({
+        navToolbarCls: this.navToolbarCls,
+        hasAnnotations: this.currentImg.annotations
+      }));
+
+      this.elemChoice = this.parent.toolbar.element.find('.' + this.navToolbarCls + ' .mirador-icon-choices');
+      this.elemChoice.hide();
+
+      this.attachNavEvents();
+    },
+
+
+    addStatusbarNav: function() {
+      this.parent.statusbar.append($.Templates.folioView.statusbar({
         statusbarCls: this.statusbarCls,
         width: this.width,
         height: this.height
@@ -9240,7 +9912,8 @@ jQuery.fn.scrollStop = function(callback) {
         return false;
       }
       console.log('session restored');
-      return JSON.parse(localStorage.getItem('Mirador_data'));
+      //return JSON.parse(localStorage.getItem('Mirador_data'));
+      return false;
     }
   };
 

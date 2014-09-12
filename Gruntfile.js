@@ -58,6 +58,7 @@ module.exports = function(grunt) {
     'js/src/lockController.js',
     'js/src/iiif.js',
     'js/src/imageView.js',
+    'js/src/folioView.js',
     'js/src/scrollView.js',
     'js/src/metadataView.js',
     'js/src/thumbnailsView.js',
