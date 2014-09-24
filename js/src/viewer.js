@@ -94,8 +94,8 @@
       if (typeof this.initialLayout !== 'undefined') {
         console.log("layout not undefined");
         console.log(this.initialLayout);
-        $.viewer.layout.applyLayout(this.initialLayout);
-        this.currentLayout = this.initialLayout;
+        // $.viewer.layout.applyLayout(this.initialLayout);
+        // this.currentLayout = this.initialLayout;
       }
     },
 
