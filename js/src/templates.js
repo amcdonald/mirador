@@ -66,7 +66,7 @@
             '{{#list}}',
               '<ul class="ul-{{manifestId}}">',
                 '{{#imageData}}',
-                  '<li><a href="javascript:;" data-image-id="{{id}}" data-manifest-id="{{../manifestId}}">{{trimTitlePrefix title}}</a></li>',
+                  '<li class="load-window-li"><a href="javascript:;" data-image-id="{{id}}" data-manifest-id="{{../manifestId}}">{{trimTitlePrefix title}}</a></li>',
                 '{{/imageData}}',
               '</ul>',
             '{{/list}}',

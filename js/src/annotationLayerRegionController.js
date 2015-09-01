@@ -35,6 +35,8 @@
       // annotations, an undesired effect.
       annotationsBySize = this.parent.get('annotations').slice().sort(this.sortRegionsBySize);
 
+      console.log(annotationsBySize);
+
       if (_this.parent.get('visible')) {
 
         jQuery.each(annotationsBySize, function(index, annotation) {

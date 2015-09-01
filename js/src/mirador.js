@@ -26,7 +26,7 @@ window.Mirador = window.Mirador || function(config) {
    */
   $.DEFAULT_SETTINGS = {
 
-    'workspaceAutoSave': false,
+    'workspaceAutoSave': true,
 
     'showNoImageChoiceOption': true,
 
@@ -439,9 +439,16 @@ window.Mirador = window.Mirador || function(config) {
   $.getOsdFrame = function(region, currentImg) {
     var imgWidth = currentImg.width,
     imgHeight = currentImg.height,
-    canvasWidth = currentImg.canvasWidth,
-    canvasHeight = currentImg.canvasHeight,
-    widthNormaliser = imgWidth/canvasWidth,
+    canvasHeight,
+    canvasWidth = currentImg.canvasWidth;
+
+    if(currentImg.canvasHeight === undefined){
+      canvasHeight = currentImg.height;
+    }else{
+      canvasHeight = currentImg.canvasHeight;  
+    }
+
+    var widthNormaliser = imgWidth/canvasWidth,
     heightNormaliser = imgHeight/canvasHeight,
     rectX = (region[0]*widthNormaliser)/imgWidth,
     rectY = (region[1]*heightNormaliser)/imgWidth,

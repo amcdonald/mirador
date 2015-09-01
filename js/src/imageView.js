@@ -463,13 +463,16 @@
       });
 
       navToolbar.on('click', selectorEditor, function() {
-        console.log("clicked editor button");
-        $.viewer.loadView("editorView", _this.manifestId);
+        // console.log("clicked editor button");
+        // $.viewer.loadView("editorView", _this.manifestId);
+        // Meteor.call("getNewEditorId", Meteor.user(), Session.get("current-project"), _this.openAt)
+        Meteor.miradorFunctions.newDoc(_this.openAt);
+        console.log(_this);
       });
 
       navToolbar.on('click', selectorAddFolio, function() {
 
-        Meteor.miradorFunctions.createFolioEntry(_this.currentImg.imageUrl, _this.currentImg.height, _this.currentImg.width, _this.currentImg.title);
+        Meteor.miradorFunctions.createFolioEntry(_this.currentImg.imageUrl, _this.currentImg.height, _this.currentImg.width, _this.currentImg.title, Meteor.userId());
       });
 
       navToolbar.on('click', selectorScrollView, function() {

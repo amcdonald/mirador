@@ -212,7 +212,8 @@
     parseMetadataAbout: function() {
       this.metadata.about = {
         '@context': this.jsonLd['@context'] || '',
-        '@id':      this.jsonLd['@id'] || ''
+        '@id':      this.jsonLd['@id'] || '',
+        'scriptorium': this.jsonLd.scriptorium || ''
       };
     },
 

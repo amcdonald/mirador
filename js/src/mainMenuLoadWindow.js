@@ -56,7 +56,8 @@
       });
 
       jQuery(document).on('click', selectorAddMani, function() {
-        Meteor.miradorFunctions.addMani();
+        // Meteor.miradorFunctions.addMani();
+        console.log("load manifest");
       });      
 
       // attach click event for scroll view icon

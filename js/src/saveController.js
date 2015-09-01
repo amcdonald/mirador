@@ -20,7 +20,6 @@
 
 
       buildWidgetJSON = function(widget) {
-
         var widgetState = {
           height: widget.getHeight(),
           width: widget.getWidth(),
@@ -29,17 +28,20 @@
         };
 
         if (widgetState.type === 'imageView') {
-          widgetState.openAt = widget.openAt,
+          //widgetState.openAt = widget.openAt,
+          widgetState.openAt = widget.viewObj.currentImg.title,
 
-          widgetState.zoomState = (function(bounds) {
-            return {
-              x: bounds.x,
-              y: bounds.y,
-              width: bounds.width,
-              height: bounds.height
-            };
+          // widgetState.zoomState = (function(bounds) {
+          //   return {
+          //     x: bounds.x,
+          //     y: bounds.y,
+          //     width: bounds.width,
+          //     height: bounds.height
+          //   };
 
-          })(widget.viewObj.osd.viewport.getBounds()),
+          // }),
+
+          // (widget.viewObj.osd.viewport.getBounds()),
 
           widgetState.dimensions = [],
           widgetState.lockedViews = [];
@@ -93,7 +95,9 @@
 
     save : function() {
       if ($.viewer) {
-        localStorage.setItem('Mirador_data', this.buildJSON());
+
+        // localStorage.setItem('Mirador_data', this.buildJSON());
+        Meteor.call("saveWorkSpace", this.buildJSON(), Meteor.userId(), Session.get("current_project"));
       }
 
       setTimeout(function() {

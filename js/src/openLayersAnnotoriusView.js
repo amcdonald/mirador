@@ -25,7 +25,10 @@
       this.currentImgIndex = this.getImageIndexById(this.imageId);
     }
 
+    this.metadata = $.getMetadataByManifestId(this.manifestId);
+
     this.currentImg = this.imagesList[this.currentImgIndex];
+
 
     annotorious.plugin.Parse.prototype.addSrc(this.currentImg.canvasId);
 
@@ -76,16 +79,17 @@
       this.olMap.zoomToMaxExtent();
 
       anno.makeAnnotatable(this.olMap);
+
+      var self = this;
+
+      anno.addHandler('onAnnotationRemoved', function(annotation){
+        console.log(annotation);
+      });
+
       anno.addHandler('onAnnotationCreated', function(annotation) {
         var annoObject = annotation;
-        // console.log("height = " +annoObject.shapes[0].geometry.height);
-        // console.log("width = " +annoObject.shapes[0].geometry.width);
-        // console.log("x = " +annoObject.shapes[0].geometry.x);
-        // console.log("y = " +annoObject.shapes[0].geometry.y);
-        // console.log("text = " + annoObject.text);
-        // console.log("source = " + annoObject.src);
-
-        Meteor.call("saveAnnotoriusAnnos", annotation.src, annotation.x, annotation.y, annotation.width, annotation.height, annotation.text);
+        //we flip the y value because of differences in how annotorius and mirador conside the 0,0 point
+        Meteor.call("saveAnnotoriusAnnos", annotation.src, annotation.shapes[0].geometry.x, (self.currentImg.height - annotation.shapes[0].geometry.y) - annotation.shapes[0].geometry.height, annotation.shapes[0].geometry.width, annotation.shapes[0].geometry.height, annotation.text, self.metadata.about.scriptorium);
 
       });
     },

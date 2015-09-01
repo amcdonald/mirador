@@ -85,6 +85,7 @@
             }
 
             jQuery.each(_this.annotationUrls, function(index, url) {
+                console.log(url);
                 var request =  jQuery.ajax(
                     {
                     url: url,
