@@ -10,7 +10,7 @@
         visibilityRatio:  1,
         minZoomLevel:     0,
         defaultZoomLevel: 0,
-        prefixUrl:        'images/openseadragon/',
+        prefixUrl:        '/images/openseadragon/',
         navImages: {
           zoomIn: {
             REST:   'zoom-in.png',
