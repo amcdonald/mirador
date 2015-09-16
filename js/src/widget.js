@@ -189,7 +189,8 @@
 
       this.element.dialog({
         close: function(event, ui) {
-          _this.close();
+          // _this.close();
+          Router.go("browse");
         },
 
         drag: function(event, ui) {
