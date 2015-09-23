@@ -15,17 +15,32 @@
       return iiifUri;
     },
 
+    getVersionFromContext: function(context) {
+      if (context == "http://iiif.io/api/image/2/context.json") {
+        return "2.0";
+      } else {
+        return "1.1";
+      }
+    },
 
     getUriWithHeight: function(uri, height) {
       uri = uri.replace(/\/$/, '');
-      return this.getUri(uri) + '/full/,' + height + '/0/native.jpg';
+      return this.getUri(uri) + '/full/,' + height + '/0/default.jpg';
     },
 
 
     prepJsonForOsd: function(json) {
-      json.image_host    = this.getImageHostUrl(json);
-      json.scale_factors = this.packageScaleFactors(json);
-      json.profile       = json.profile.replace(/image-api\/1.\d/, 'image-api');
+
+      version = this.getVersionFromContext(json['@context']);
+
+      if(version == "1.1")
+      {
+        json.image_host    = this.getImageHostUrl(json);
+        json.scale_factors = this.packageScaleFactors(json);
+
+        json.profile       = json.profile.replace(/image-api\/1.\d/, 'image-api');
+      }
+
 
       if (!json.tile_width) {
         json.tile_width = 256;
