@@ -55,6 +55,12 @@
 
         }
 
+        if (widgetState.type === "openLayersAnnotoriusView") {
+          console.log(widgetState);
+          return;
+        }
+
+
         // osdRect: 34,
         // scrollTop: 384,
         // thumbSize: 34,

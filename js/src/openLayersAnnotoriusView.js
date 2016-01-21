@@ -50,7 +50,7 @@
           mapId: this.mapId
         }));
 
-      annotorious.plugin.Parse.prototype.loadAnnotations();
+      // annotorious.plugin.Parse.prototype.loadAnnotations();
 
       this.loadOpenLayers();
       this.addToolbarAnno();
@@ -86,11 +86,16 @@
         console.log(annotation);
       });
 
+      anno.addHandler('onEditorShown', function(annotation){
+        console.log("POPUP");
+        console.log(annotation);
+      });
+
       anno.addHandler('onAnnotationCreated', function(annotation) {
         var annoObject = annotation;
         //we flip the y value because of differences in how annotorius and mirador conside the 0,0 point
-        Meteor.call("saveAnnotoriusAnnos", annotation.src, annotation.shapes[0].geometry.x, (self.currentImg.height - annotation.shapes[0].geometry.y) - annotation.shapes[0].geometry.height, annotation.shapes[0].geometry.width, annotation.shapes[0].geometry.height, annotation.text, self.metadata.about.scriptorium);
-
+        //Meteor.call("saveAnnotoriusAnnos", annotation.src, annotation.shapes[0].geometry.x, (self.currentImg.height - annotation.shapes[0].geometry.y) - annotation.shapes[0].geometry.height, annotation.shapes[0].geometry.width, annotation.shapes[0].geometry.height, annotation.text, self.metadata.about.scriptorium);
+        console.log(annotation);
       });
     },
 
