@@ -92,7 +92,7 @@
         }
       });
 
-      this.parent.element.dialog('option', 'title', this.getTitle());
+      this.parent.element.dialog('option', 'title', "Folio");
 
       // hide browser based full-screen icon
       this.parent.toolbar.element.find('.' + this.osdToolbarCls + ' button:last-child').hide();

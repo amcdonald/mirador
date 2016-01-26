@@ -1,5 +1,5 @@
 //! Mirador 0.9.0
-//! Built on 2015-09-14
+//! Built on 2016-01-26
 /*! jQuery UI - v1.10.3 - 2013-06-06
  * http://jqueryui.com
  * Includes: jquery.ui.core.js, jquery.ui.widget.js, jquery.ui.mouse.js, jquery.ui.position.js, jquery.ui.draggable.js, jquery.ui.resizable.js, jquery.ui.button.js, jquery.ui.dialog.js, jquery.ui.menu.js, jquery.ui.slider.js
@@ -7595,7 +7595,8 @@ jQuery.fn.scrollStop = function(callback) {
 
 
     getTitle: function() {
-      return $.getViewLabel(this.type) + ' : ' + $.getTitlePrefix(this.metadataDetails);
+      // return $.getViewLabel(this.type) + ' : ' + $.getTitlePrefix(this.metadataDetails);
+      return "";
       // return $.getTitlePrefix(this.metadataDetails);
     }
 
@@ -8616,7 +8617,7 @@ jQuery.fn.scrollStop = function(callback) {
         }
       });
 
-      this.parent.element.dialog('option', 'title', this.getTitle());
+      this.parent.element.dialog('option', 'title', "Folio");
 
       // hide browser based full-screen icon
       this.parent.toolbar.element.find('.' + this.osdToolbarCls + ' button:last-child').hide();
