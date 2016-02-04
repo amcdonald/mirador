@@ -30,7 +30,6 @@
         create: function() {
             var _this = this;
 
-
             // returns a promise object constructed using
             // jQuery.when.apply(this, [deferred array]);
             _this.getAnnotations().done( function() {
@@ -77,6 +76,7 @@
             var _this = this,
             requests = [];
 
+
             _this.set('annotations', []);
 
             if (!_this.annotationUrls) {
@@ -85,7 +85,6 @@
             }
 
             jQuery.each(_this.annotationUrls, function(index, url) {
-                console.log(url);
                 var request =  jQuery.ajax(
                     {
                     url: url,
@@ -230,7 +229,6 @@
                     var idString = '#listing_' + id;
                     return jQuery(idString);
             });
-            console.log(_this);
 
             _this.parent.element.find('.annotation').fadeIn();
             _this.parent.element.find('.annotationListing').slideDown();

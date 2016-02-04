@@ -30,6 +30,7 @@
         if (widgetState.type === 'imageView') {
           //widgetState.openAt = widget.openAt,
           widgetState.openAt = widget.viewObj.currentImg.title,
+          widgetState.imageId = widget.viewObj.currentImg.id,
 
           // widgetState.zoomState = (function(bounds) {
           //   return {
@@ -53,6 +54,10 @@
 
         if (widgetState.type === "scrollView") {
 
+        }
+
+        if (widgetState.type === "openLayersAnnotoriusView") {
+          return;
         }
 
         // osdRect: 34,

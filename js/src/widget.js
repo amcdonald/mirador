@@ -203,7 +203,12 @@
 
       this.element.dialog({
         close: function(event, ui) {
-          _this.close();
+          // _this.close();
+          if(_this.type == "openLayersAnnotoriusView"){
+            Meteor.miradorFunctions.loadMirador();
+          }else{
+            _this.close();
+          }
         },
 
         drag: function(event, ui) {

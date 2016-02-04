@@ -92,7 +92,6 @@
 
     renderWidgetsForCollection: function(collection) {
       var _this = this;
-
       jQuery.each(collection.widgets, function(index, config) {
         if (!jQuery.isEmptyObject(config) && $.isValidView(config.type)) {
           config.manifestId = $.getManifestIdByUri(collection.manifestUri);

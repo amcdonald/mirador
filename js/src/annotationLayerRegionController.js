@@ -35,7 +35,6 @@
       // annotations, an undesired effect.
       annotationsBySize = this.parent.get('annotations').slice().sort(this.sortRegionsBySize);
 
-      console.log(annotationsBySize);
 
       if (_this.parent.get('visible')) {
 
@@ -117,7 +116,10 @@
       if (!this.parent.annotationUrls) {
         return;
       }
-      this.parent.parent.osd.drawer.clearOverlays();
+      if (this.parent.parent.osd.drawer){
+        this.parent.parent.osd.drawer.clearOverlays();
+      }
+      
     }
 
   };
